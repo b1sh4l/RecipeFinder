@@ -26,10 +26,21 @@ export default function TabOneScreen() {
     }
   };
 
-  const handleRecipeSelect = (recipe: Recipe) => {
-    setSelectedRecipe(recipe);
+  const handleRecipeSelect = async (recipe: Recipe) => {
+    try {
+      console.log(recipe.id);
+      const response = await axios.get(`https://api.spoonacular.com/recipes/${recipe.id}/information`, {
+        params: {
+          apiKey: API_KEY,
+        },
+      });
+      setSelectedRecipe(response.data);
+    } catch (error) {
+      console.error('Error fetching recipe details:', error);
+    }
   };
-
+  
+  
   return (
     <View style={styles.container}>
       <SearchScreen onSearch={handleSearch} />
@@ -37,15 +48,18 @@ export default function TabOneScreen() {
       {selectedRecipe && (
         <RecipeDetail
           title={selectedRecipe.title}
-          ingredients={(selectedRecipe.missedIngredients || []).concat(selectedRecipe.usedIngredients || []).map(ingredient => ingredient.name)}
-          instructions={selectedRecipe.instructions} 
+          ingredients={selectedRecipe.extendedIngredients.map((ingredient: any) => ingredient.name)}
+          instructions={selectedRecipe.instructions || ''}
           image={selectedRecipe.image || ''}
           missedIngredients={selectedRecipe.missedIngredients || []}
-          usedIngredients={selectedRecipe.usedIngredients || []}
+          usedIngredients={selectedRecipe.usedIngredients || []} 
+          id={parseInt(selectedRecipe.id)}      
         />
       )}
     </View>
   );
+  
+  
 }
 
 const styles = StyleSheet.create({

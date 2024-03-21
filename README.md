@@ -1,3 +1,3 @@
 Welcome to RecipeFinder!
 
-![RecipeFinder](https://ibb.co/4JHrc3z)
+![RecipeFinder](https://github.com/b1sh4l/RecipeFinder/blob/324009064512d25d307279915b40c7130a04e306/assets/RecipeFinder-ezgif.com-video-to-gif-converter.gif)
